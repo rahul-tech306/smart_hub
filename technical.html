@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>upload your details</title>
+    <style>
+       
+       .body {
+                    font-family: Arial, sans-serif;
+                    background-color: #fccf04;
+                    border: 2px solid #121212;
+                    text-align: center;
+                    margin: 0px;
+                    padding: 0px;
+                }
+                .container {
+                    max-width: 550px;
+                    margin: 2px;
+                    text-align: left;
+                    height: 800px;
+                    padding: 20px;
+                    border: 2px solid #121212;
+                    background-color:#f1f29d;
+                    border-radius: 0px;
+                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                }
+                .circular-photo {
+                    width: 100px;
+                    height: 100px;
+                    border-radius: 50%;
+                    overflow: hidden;
+                    margin-bottom: 20px;
+                }
+                .circular-photo img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+                .form-group {
+                    margin-bottom: 15px;
+                }
+                .form-group label {
+                    display: block;
+                    margin-bottom: 5px;
+                }
+                .form-group input,
+                .form-group select {
+                    width: 100%;
+                    padding: 8px;
+                    box-sizing: border-box;
+                }
+                .form-group button {
+                    padding: 10px 20px;
+                    color: white;
+                    border: none;
+                    cursor: pointer;
+                }
+                .form-group button[type="submit"] {
+                    background-color: #038007;
+                }
+                .form-group button[type="submit"]:hover {
+                    background-color: #027508;
+                }
+                .form-group button[type="reset"] {
+                    background-color: #fe270a;
+                }
+                .form-group button[type="reset"]:hover {
+                    background-color: #e02000;
+                }
+                .address-label {
+                    border: 1px solid #000;
+                    padding: 10px;
+                    width: 300px;
+                    font-family: Arial, sans-serif;
+                }
+                .back-gd {
+                    background-color: #fccf04;
+                    border: 2px solid #121212;
+                }
+                .footer-buttons {
+                    text-align: center;
+                    margin-top: 5px;
+                }
+                .footer-buttons button {
+                    margin: 20px;
+                    padding: 15px 20px;
+                    font-size: 16px;
+                    border: 1px solid #171616;
+                    border-radius: 10px;
+                    cursor: pointer;
+                    background-color: #fe270a;
+                    color: white;
+                    transition: background-color 0.3s;
+                }
+                .footer-buttons button:hover {
+                    background-color: #3fa202;
+                }
+            </style>
+        </head>
+        <body>
+            <center>
+            <form action="eee" method="post">
+            <div class="container">
+                <div class="form-group">
+                    <label for="photo">Upload Photo:</label>
+                    <div class="circular-photo" id="photo-preview">
+                        <img src="" id="photo-img">
+                    </div>
+                    <input type="file" id="photo" name="photo" accept="image/*">
+                </div>
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="age">Age:</label>
+                        <input type="number" id="age" name="age" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="age">EXPERIENCE:</label>
+                        <input type="number" id="experience" name="experience" placeholder="how many years of experience" maxlength="2" pattern="[0-9]" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number:</label>
+                        <input type="text" id="phone" name="phone" placeholder="Enter your phone number" maxlength="10" pattern="[0-9]{10}" required>
+                    </div>
+                    <div class="form-group address-label">
+                        <label for="address">Address:</label>
+                        <input type="text" id="address" name="address">
+                    </div>
+                    <div class="form-group">
+                        <label for="state">State:</label>
+                        <select id="state" name="state" required>
+                            <option value="" disabled selected>Select a state</option>
+                            
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="city">City:</label>
+                        <select id="city" name="city" required>
+                            <option value="" disabled selected>Select a city</option>
+                            
+                        </select>
+                    </div>
+                    <div class="footer-buttons">
+                        <button type="submit" value="submit">Submit</button>
+                        <button type="reset" value="reset">Reset</button>
+                    </div>
+                </div>
+        </form>
+    </center>
+            <script>
+                const stateCityData = {
+                    "TELANGANA": ["SELECT YOUR CITY","HYDERABAD", "NIZAMABAD", "KARIMNAGAR","ADILABAD","WARANGAL","KHAMMAM","SURIYAPET"],
+                    "ANDHRA PRADESH": ["SELECT YOUR CITY","VISHAKAPATNAM", "VIJAYAWADA", "GUNTUR","CHITOOR"],
+                    "KARNATAKA": ["SELECT YOUR CITY","BANGALORE", "MYSORE", "HUBLI"],
+                    "TAMIL NADHU":["SELECT YOUR CITY","CHENNAI"]
+                };
+        
+                const stateSelect = document.getElementById('state');
+                for (const state in stateCityData) {
+                    const option = document.createElement('option');
+                    option.value = state;
+                    option.textContent = state;
+                    stateSelect.appendChild(option);
+                }
+        
+                stateSelect.addEventListener('change', (e) => {
+                    const cities = stateCityData[e.target.value];
+                    const citySelect = document.getElementById('city');
+                    citySelect.innerHTML = '';
+                    cities.forEach(city => {
+                        const option = document.createElement('option');
+                        option.value = city;
+                        option.textContent = city;
+                        citySelect.appendChild(option);
+                    });
+                });
+        
+                document.getElementById('photo').addEventListener('change', function (event) {
+                    const file = event.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function (e) {
+                            document.getElementById('photo-img').src = e.target.result;
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+        
+                document.getElementById('job-form').addEventListener('submit', function (event) {
+                    event.preventDefault();
+                    alert('Form submitted!');
+                });
+            </script>
+        </body>
+        </html>
+        

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SELECT YOUR WORKER</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f8f8f8;
+    }
+    .container {
+        max-width: 450px; 
+        margin: 5px auto;
+        height: 475px;
+        padding: 20px; 
+        border: 2px solid #121212;
+        background-color: #f1f29d;
+        border-radius: 0px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    h2 {
+        text-align: center;
+    }
+    .top-bar {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        padding: 10px;
+    }
+    .top-bar .icon {
+        cursor: pointer;
+        font-size: 30px;
+        color: #121212;
+    }
+    .top-bar .icon:hover {
+        color: #09b125;
+    }
+    .search-container {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .search-bar {
+        text-align: center;
+        margin-bottom: 20px;
+        background-color: #f1f29d;
+    }
+    .search-container input {
+        width: 60%;
+        padding: 10px;
+        font-size: 20px;
+        border: 1px solid #0a0a0a;
+        border-radius: 5px;
+    }
+    .location {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .options {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        max-height: 480px;
+        overflow-y: scroll;
+    }
+    .option {
+        width: 40%;
+        margin-bottom: 30px;
+        cursor: pointer;
+        transition: transform 0.2s;
+        padding: 10px;
+        border: 1px solid #0f0e0e;
+        border-radius: 5px;
+        text-align: center;
+    }
+    .option:hover {
+        transform: scale(1.0);
+        background-color: #f2a775;
+    }
+    .option img {
+        width: 100%;
+        height: 120px;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+    .option p {
+        margin: 50;
+    }
+    .option.selected {
+        background-color: #0aaf0f;
+        color: #0b0b0b;
+    }
+    .back-ground {
+        background-color: #fccf04;
+        border: 1px solid #121212;
+        text-align: center;
+    }
+    .back-grd {
+        background-color: #fccf04;
+        border: 2px solid #121212;
+        padding: 0.5px;
+        text-align: center;
+    }
+    .footer-buttons {
+        text-align: center;
+        margin-top: 5px;
+    }
+    .footer-buttons button {
+        margin: 20px;
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        background-color: #fe270a;
+        color: white;
+        transition: background-color 0.3s;
+    }
+    .footer-buttons button:hover {
+        background-color: #3fa202;
+    }
+</style>
+</head>
+<body>
+    <div class="back-grd">
+    <div class="location" id="location">    
+        <button onclick="getLocation()">Show Location</button>
+    </div>
+    <div class="search-container">
+        <div class="top-bar">
+            <input type="text" id="searchBar" placeholder="Search for workers...">
+            <i class="fas fa-bell icon"></i>
+            <i class= "fas fa-question-circle icon" ></i>
+        </div>
+    </div>
+    </div>
+    <div class="container">
+    <div class="options">
+        
+       <div class="option" onclick="selectOption('option 1')">
+            <p onclick="window.location.href='show car.html'"><img src="carpanter.jpg" alt="Option 1"></p>
+            <p>CARPANTER</p>
+        </div>
+        <div class="option" onclick="selectOption('option2')">
+            <p onclick="window.location.href='workersList.html'"><img src="agri.jpg" alt="Option 2"></p>
+            <p>AGRICULTURE</p>
+        </div>
+        <div class="option" onclick="selectOption('option3')">
+            <img src="construction.jpg" alt="Option 3">
+            <p>CONSTRUCTION</p>
+        </div>
+        <div class="option" onclick="selectOption('option4')">
+            <img src="MISTRI.jpg" alt="Option 4">
+            <p>MESTRI</p>
+        </div>
+        <div class="option" onclick="selectOption('option5')">
+            <img src="paint.jpg" alt="Option 5">
+            <p>PAINTERS</p>
+        </div>
+        <div class="option" onclick="selectOption('option6')">
+            <img src="clean.jpg" alt="Option 6">
+            <p>CLEANERS</p>
+        </div>
+        <div class="option" onclick="selectOption('option7')">
+            <img src="cook.jpg" alt="Option 7">
+            <p>COOK</p>
+        </div>
+        <div class="option" onclick="selectOption('option8')">
+            <img src="electrician.jpg" alt="Option 8">
+            <p>ELECTRICIAN</p>
+        </div>
+        <div class="option" onclick="selectOption('option9')">
+            <img src="plumber.jpg" alt="Option 9">
+            <p>PLUMBER</p>
+        </div>
+        <div class="option" onclick="selectOption('option10')">
+            <img src="technical repair.jpg" alt="Option 10">
+            <p>TECHNICAL REPAIR</p>
+        </div>
+    </div>
+    </div>
+    <div class="footer-buttons">
+        <div class="back-ground">
+        <button onclick="window.location.href='customer select.html'">Home</button>
+        <button onclick="window.location.href='customer profile.html'">My Profile</button>
+    </div>
+    </div>
+<script>
+    let selectedOption = null;
+
+    function selectOption(option) {
+        if (selectedOption) {
+            selectedOption.classList.remove('selected');
+        }
+        selectedOption = document.querySelector(`[onclick="selectOption('${option}')"]`);
+        selectedOption.classList.add('selected');
+    }
+
+    document.getElementById('searchBar').addEventListener('input', function(e) {
+        const searchTerm = e.target.value.toLowerCase();
+        const options = document.querySelectorAll('.option');
+        
+        options.forEach(option => {
+            const text = option.textContent.toLowerCase();
+            if (text.includes(searchTerm)) {
+                option.style.display = '';
+            } else {
+                option.style.display = 'none';
+            }
+        });
+    });
+
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showLocation, handleError);
+        } else {
+            const locationElement = document.getElementById('location');
+            locationElement.textContent = 'Geolocation is not supported by this browser.';
+        }
+    }
+
+    function showLocation(position) {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+        const locationElement = document.getElementById('location');
+        locationElement.textContent = `Current Location: Latitude ${latitude.toFixed(6)}, Longitude ${longitude.toFixed(6)}`;
+    }
+
+    function handleError(error) {
+        const locationElement = document.getElementById('location');
+        locationElement.textContent = `Error getting location: ${error.message}`;
+    }
+</script>
+</body>
+</html>

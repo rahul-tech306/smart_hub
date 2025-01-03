@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Available Workers for Customers</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      background-color: #fccf04;
+      padding: 20px;
+      border-radius: 8px;
+      color: #333;
+    }
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+    .worker-box {
+      background-color: #f1f29d;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      width: 1000px;
+      display: flex; /* Ensures content is arranged side by side */
+      align-items: center;
+      gap: 20px; /* Adds space between the image and the text */
+      transition: transform 0.2s ease;
+    }
+    .worker-box:hover {
+      transform: translateY(-5px);
+    }
+    .worker-photo img {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: 20px;
+    }
+    .worker-details {
+      flex: 1; /* Ensures that the details take up the remaining space */
+      text-align: left;
+    }
+    .worker-name {
+      font-size: 1.5em;
+      font-weight: bold;
+    }
+    .worker-detail {
+      margin: 5px 0;
+    }
+    .worker-contact {
+      background-color: #28a745;
+      color: rgb(245, 244, 244);
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 5px;
+      display: inline-block;
+      margin-top: 10px;
+    }
+    .worker-contact:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+  <h1>Agriculture Workers</h1>
+
+  <div class="container">
+    <% if (workers.length === 0) { %>
+      <p>No workers found.</p>
+    <% } else { %>
+      <% workers.forEach(worker => { %>
+        <div class="worker-box">
+          <!-- Worker Photo on the Left -->
+          <div class="worker-photo">
+            <img src="<%= worker.photo ? worker.photo : 'https://via.placeholder.com/100' %>" alt="Worker Photo">
+          </div>
+
+          <!-- Worker Details on the Right -->
+          <div class="worker-details">
+            <!-- Worker Name -->
+            <div class="worker-name"><%= worker.name %></div>
+
+            <!-- Worker Age -->
+            <div class="worker-detail">Age: <%= worker.age %></div>
+
+            <!-- Worker Experience -->
+            <div class="worker-detail">Experience: <%= worker.experience %> years</div>
+
+            <!-- Worker Address -->
+            <div class="worker-detail">Address: <%= worker.address %>, <%= worker.city %>, <%= worker.state %></div>
+
+            <!-- Worker Contact Info -->
+            <a href="tel:<%= worker.phone %>" class="worker-contact">Contact: <%= worker.phone %></a>
+          </div>
+        </div>
+      <% }) %>
+    <% } %>
+  </div>
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OTP Verification</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f5f5f5;
+    }
+
+    .container {
+      width: 300px;
+      padding: 20px;
+      border: 2px solid #121212;
+      border-radius: 5px;
+      text-align: center;
+      background-color:  #fccf04;
+    }
+
+    h2 {
+      color: #0f0f0f;
+    }
+
+    p {
+      color: #080808;
+    }
+
+    .otp-input {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .otp-input input {
+      width: 40px;
+      height: 40px;
+      text-align: center;
+      font-size: 16px;
+      background-color: #efe26e;
+      border: 1px solid #030303;
+      border-radius: 5px;
+    }
+
+    button {
+      background-color: #fe270a;
+      color: white;
+      padding: 15px 20px;
+      border: 1px solid #171616;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #3fa202;
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>OTP Verification</h2>
+    <p>An OTP has been sent to your mobile number. Please enter the OTP to verify.</p>
+    <form action="verify-otp" onsubmit="verifyOTP(event)">
+      <div class="otp-input">
+        <input type="text" id="digit-1" maxlength="1" pattern="[0-9]" required oninput="moveToNext(this, 'digit-2')">
+        <input type="text" id="digit-2" maxlength="1" pattern="[0-9]" required oninput="moveToNext(this, 'digit-3')">
+        <input type="text" id="digit-3" maxlength="1" pattern="[0-9]" required oninput="moveToNext(this, 'digit-4')">
+        <input type="text" id="digit-4" maxlength="1" pattern="[0-9]" required oninput="enableButton()">
+      </div>
+      <button type="submit" id="verifyBtn" disabled>VERIFY CODE</button>
+    </form>
+  </div>
+
+  <script>
+    function moveToNext(currentInput, nextInputId) {
+      if (currentInput.value.length === 1) {
+        document.getElementById(nextInputId).focus();
+      }
+      enableButton();
+    }
+
+    function enableButton() {
+      const digit1 = document.getElementById('digit-1').value;
+      const digit2 = document.getElementById('digit-2').value;
+      const digit3 = document.getElementById('digit-3').value;
+      const digit4 = document.getElementById('digit-4').value;
+
+      // Enable button only if all digits are entered
+      document.getElementById('verifyBtn').disabled = !(digit1 && digit2 && digit3 && digit4);
+    }
+
+    async function verifyOTP(event) {
+      event.preventDefault();
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const phoneNumber = urlParams.get('phone');
+
+      // Combine OTP digits into a single string
+      const otp = [
+        document.getElementById('digit-1').value,
+        document.getElementById('digit-2').value,
+        document.getElementById('digit-3').value,
+        document.getElementById('digit-4').value,
+      ].join('');
+
+      try {
+        const response = await fetch('http://localhost:9000/verify-otp', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ phoneNumber, otp })
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          alert("OTP verified successfully!");
+          window.location.href = "dashboard.html"; // Redirect to dashboard
+        } else {
+          alert(result.message || "Invalid OTP. Please try again.");
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        alert("An error occurred while verifying the OTP.");
+      }
+    }
+  </script>
+</body>
+</html>
